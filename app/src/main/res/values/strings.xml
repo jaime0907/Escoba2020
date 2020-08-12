@@ -1,0 +1,30 @@
+<resources>
+    <string name="app_name">Escoba 2020</string>
+    <string name="start_game">Nueva partida</string>
+    <string name="youWin">¡Has ganado!</string>
+    <string name="youLose">Has perdido...</string>
+    <string name="escoba">¡Escoba!</string>
+    <string name="captureCards">¡Captura de cartas!</string>
+    <string name="captureEscoba">¡Captura de Escoba!</string>
+    <string name="escobaMano">¡Escoba de mano!</string>
+    <string name="stat_numPartidas">Partidas jugadas</string>
+    <string name="stat_numJuegos">Juegos jugados</string>
+    <string name="stat_totalEscobas">Escobas totales</string>
+    <string name="stat_partidasGanadas">Partidas ganadas</string>
+    <string name="stat_mediaPuntos">Media de puntos por juego</string>
+    <string name="stat_maxPuntos">Más puntos en un juego</string>
+    <string name="stat_maxEscobas">Más escobas en un juego</string>
+    <string name="stat_winrate">Porcentaje de victorias</string>
+    <string name="stat_maxSietes">Más sietes en un juego</string>
+    <string name="stat_maxOros">Más oros en un juego</string>
+    <string name="stat_maxCartas">Más cartas en un juego</string>
+    <string name="stat_7orosRate">Porcentaje de 7 de oros por juego</string>
+    <string name="stats">Estadísticas</string>
+    <string name="throwText">Tirar carta</string>
+    <string name="playText">Hacer jugada</string>
+    <string name="pulseContinuar">Pulse para continuar</string>
+    <string name="player">Tú</string>
+    <string name="rival">CPU</string>
+    <string name="pulseNueva">Pulse para empezar una nueva partida</string>
+    <string name="continuar">Continuar partida</string>
+</resources>
