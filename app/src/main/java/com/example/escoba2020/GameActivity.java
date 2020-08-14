@@ -1,10 +1,12 @@
 package com.example.escoba2020;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 
 import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
+import android.content.res.Configuration;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.os.Bundle;
@@ -63,11 +65,21 @@ public class GameActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        boolean esContinue = false;
+
+
         setContentView(R.layout.activity_game);
 
         db =  AppDatabase.getDatabase(getApplicationContext());
 
-        boolean esContinue = getIntent().getBooleanExtra("continue", false);
+
+        if(savedInstanceState != null){
+            esContinue = savedInstanceState.getBoolean("continue");
+        }else{
+            esContinue = getIntent().getBooleanExtra("continue", false);
+        }
+
 
         if(esContinue){
             handler.postDelayed(new Runnable() {
@@ -87,6 +99,12 @@ public class GameActivity extends AppCompatActivity {
 
     }
 
+    @Override
+    protected void onSaveInstanceState(@NonNull Bundle outState) {
+        super.onSaveInstanceState(outState);
+
+        outState.putBoolean("continue", true);
+    }
 
     public void continueGame(){
         TinyDB tinydb = new TinyDB(getApplicationContext());
@@ -309,6 +327,7 @@ public class GameActivity extends AppCompatActivity {
         }, duration*12/10 + extraTime);
 
         gameState = "Playing";
+        guardarPartida(false);
     }
 
     public void startAgain(View view){
@@ -679,20 +698,23 @@ public class GameActivity extends AppCompatActivity {
     public void redrawCenter(Card card, boolean withFlip, boolean allFlip){
         float x;
         float y;
+        int maxCardsRow = 5;
+
+        if(getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE) maxCardsRow = 7;
         View centro = findViewById(R.id.centro);
         boolean fullRow = false;
         for(int i = 0; i < listCenterCards.size(); i++){
-            if(i % 5 == 0){
-                fullRow = listCenterCards.size() - i >= 5;
+            if(i % maxCardsRow == 0){
+                fullRow = listCenterCards.size() - i >= maxCardsRow;
             }
             Card c = listCenterCards.get(i);
             if(fullRow){
-                x = centro.getX() + ((i % 5) - 5f/2f + 0.5f)*widthCard;
+                x = centro.getX() + ((i % maxCardsRow) - (float)maxCardsRow/2f + 0.5f)*widthCard;
             }else{
-                x = centro.getX() + ((i % 5) - (listCenterCards.size() - (i/5)*5)/2f + 0.5f)*widthCard;
+                x = centro.getX() + ((i % maxCardsRow) - (listCenterCards.size() - (i/maxCardsRow)*maxCardsRow)/2f + 0.5f)*widthCard;
             }
 
-            y = centro.getY() + ((i / 5) - ((listCenterCards.size() - 1)/5 + 1)/2f + 0.5f)*heightCard;;
+            y = centro.getY() + ((i / maxCardsRow) - ((listCenterCards.size() - 1)/maxCardsRow + 1)/2f + 0.5f)*heightCard;;
             moveCard(c, x, y, false, (withFlip && card.equals(c)) || allFlip, duration);
             listCenterCards.get(i).getImagen().setOnClickListener(new View.OnClickListener() {
                 @Override
